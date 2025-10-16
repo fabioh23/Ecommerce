@@ -98,7 +98,7 @@ DATABASES = {
 import dj_database_url
 import os
 
-DATABASE_URL = 'postgresql://postgres:ldIUHzpBJCdzqGigyWDjYgKrrpxKlGIc@shinkansen.proxy.rlwy.net:46983/railway'
+DATABASE_URL = 'postgresql://postgres:tOyRaIWgyNQdMTcgKOYmOZzGvBSnRJKp@gondola.proxy.rlwy.net:11948/railway'
 if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)
