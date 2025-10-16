@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <main class="principal">
+      <section class="conta">
+        <div class="conta__container">
+          <div class="checkout__titulos">
+            <p class="checkout__titulo">Meus pedidos</p>
+          </div>
+
+          {% for pedido in pedidos %}
+          <div class="pedido">
+            <div class="pedido__cabecalho">
+              <div>
+                <p><b>Data do pedido</b></p>
+                <p>{{ pedido.data_finalizacao }}</p>
+              </div>
+
+              <div>
+                <p><b>Total</b></p>
+                <p>{{ pedido.preco_total }}</p>
+              </div>
+
+              <div>
+                <p><b>ID do pedido</b></p>
+                <p>{{ pedido.id }}</p>
+              </div>
+            </div>
+
+                <div class="pedido__corpo">
+            {% for item in pedido.itens %}
+                  <div class="tabela__imagem">
+                    <img
+                      src="{{ item.item_estoque.produto.imagem.url }}"
+                      alt="{{ item.item_estoque.produto.nome }}"
+                    />
+                  </div>
+                  <div class="tabela__produto-textos">
+                    <p><b>{{ item.item_estoque.produto.nome }}</b></p>
+                    <p><b>Tamanho:</b> {{ item.item_estoque.tamanho }}</p>
+                    <p><b>Cor:</b> {{ item.item_estoque.cor.nome }}</p>
+                    <p><b>Quantidade:</b> {{ item.quantidade }}</p>
+                    <p><b>Preço un.:</b> {{ item.item_estoque.produto.preco }}</p>
+                  </div>
+               {% endfor %}
+                </div>
+              <hr>
+              <p style="margin: 20px;">Endereço de entrega: CEP: {{ pedido.endereco.cep }}, Cidade: {{ pedido.endereco.cidade }} - Estado: {{ pedido.endereco.estado }} </p>
+          </div>
+          {% endfor %}
+
+        </div>
+      </section>
+    </main>
+
+
+{% endblock %}
