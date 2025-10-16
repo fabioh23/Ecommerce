@@ -1,9 +1,5 @@
-from urllib import request
-
-from Tools.scripts.summarize_stats import format_ratio
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.template.defaultfilters import length
 from .api_mercadopago import criar_pagamento
 from .models import *
 import uuid
