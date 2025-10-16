@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, AbstractUser
 
 
 class Usuario(AbstractUser):
-
+    name = models.CharField(max_length=255)
 
 class Cliente(models.Model):
     nome = models.CharField(max_length=200, null=True, blank=True)
