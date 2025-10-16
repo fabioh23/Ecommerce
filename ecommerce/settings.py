@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TOKEN_CSRF = ('TOKEN_CSRF')
 if TOKEN_CSRF:
     SECRET_KEY = TOKEN_CSRF
-    CSRF_TRUSTED_ORIGINS = ['*']
+    CSRF_TRUSTED_ORIGINS = ['ecommerce-production-6ea0.up.railway.app']
 else:
     SECRET_KEY = 'django-insecure-*(1mxx+@wwg9*ec#xws2d8e&vugs-cw2@f2w9+&!xtkk#dog_l'
 
@@ -35,7 +35,7 @@ else:
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*' #para teste no mercado pago, retirar antes de jogar no servidor
+    'ecommerce-production-6ea0.up.railway.app' #para teste no mercado pago, retirar antes de jogar no servidor
 ]
 
 
