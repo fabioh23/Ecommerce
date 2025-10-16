@@ -6,12 +6,13 @@ class LojaConfig(AppConfig):
     name = 'loja'
 
     def ready(self):
-        from .models import Usuario
+        from django.contrib.auth import get_user_model
         import os
 
         email = os.getenv('EMAIL_ADMIN')
         senha = os.getenv('SENHA_ADMIN')
 
-        usuarios = Usuario.objects.filter(email=email)
+        users = get_user_model()
+        usuarios = users.objects.filter(email=email)
         if not usuarios:
-            Usuario.objects.create_superuser(username="admin", email=email, password=senha, is_active=True, is_staff=True)
+            users.objects.create_superuser(username="admin", email=email, password=senha, is_active=True, is_staff=True)
