@@ -18,6 +18,6 @@ class LojaConfig(AppConfig):
             User.objects.create_superuser(username=email, email=email, password=senha, is_active=True, is_staff=True)
 
         super_user = User.objects.get(email=email, is_staff=True, is_superuser=True)
-        super_user_id = super_user.pk
+        super_user_id = super_user.id
         if super_user:
             Cliente.objects.create(email=email, usuario=super_user_id)
