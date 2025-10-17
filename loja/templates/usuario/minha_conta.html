@@ -3,16 +3,17 @@
 
 {% block body %}
 
-{% if alterado %}
-<p>Alterações salvas com sucesso</p>
-{% endif %}
 
-{% if erro == "formulario_invalido" %}
-<p>Formulário inválido, tente novamente</p>
-{% endif %}
 
     <main class="principal">
       <section class="conta">
+          {% if alterado %}
+            <p>Alterações salvas com sucesso</p>
+            {% endif %}
+
+            {% if erro == "formulario_invalido" %}
+            <p>Formulário inválido, tente novamente</p>
+            {% endif %}
         <div class="conta__container">
           <div class="checkout__titulos">
             <p class="checkout__titulo">Dados pessoais</p>

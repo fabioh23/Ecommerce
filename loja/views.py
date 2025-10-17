@@ -197,9 +197,9 @@ def finalizar_pedido(request, id_pedido):
             return render(request, 'checkout.html', context)
         else:
             itens_pedido = ItensPedido.objects.filter(pedido=pedido)
-            #link_url = 'https://dfa4eea1922762f5579f63e5ba075992.serveo.net' #para teste no mercado pago
-            link = request.build_absolute_uri(reverse('finalizar_pagamento'))
-            #link = link_url+reverse('finalizar_pagamento')
+            link_url = 'https://ecommerce-production-af09.up.railway.app' #para teste no mercado pago
+            #link = request.build_absolute_uri(reverse('finalizar_pagamento'))
+            link = link_url+reverse('finalizar_pagamento')
             link_pagamento, id_pagamento = criar_pagamento(itens_pedido, link)
             pagamento = Pagamento.objects.create(id_pagamento=id_pagamento, pedido=pedido)
             pagamento.save()
