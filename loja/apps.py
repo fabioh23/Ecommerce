@@ -23,6 +23,6 @@ class LojaConfig(AppConfig):
 
         User = get_user_model()
         user_instance = User.objects.get(pk=super_user_id)
-        cliente.user = user_instance
+        Cliente.user = user_instance
         if super_user:
-            Cliente.objects.create(email=email, usuario=cliente.user)
+            Cliente.objects.create(email=email, usuario=Cliente.user)
