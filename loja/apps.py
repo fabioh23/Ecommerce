@@ -7,6 +7,7 @@ class LojaConfig(AppConfig):
 
     def ready(self):
         from django.contrib.auth.models import User
+        from .models import Cliente
         import os
 
         email = os.getenv('EMAIL_ADMIN')
@@ -15,3 +16,4 @@ class LojaConfig(AppConfig):
         usuarios = User.objects.filter(email=email)
         if not usuarios:
             User.objects.create_superuser(username="admin", email=email, password=senha, is_active=True, is_staff=True)
+            Cliente.objects.create(email=email, usuario=1)
