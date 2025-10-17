@@ -32,7 +32,7 @@ else:
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'ecommerce-production-af09.up.railway.app' #para teste no mercado pago, retirar antes de jogar no servidor
