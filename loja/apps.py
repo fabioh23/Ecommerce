@@ -16,7 +16,8 @@ class LojaConfig(AppConfig):
         usuarios = User.objects.filter(email=email)
         if not usuarios:
             User.objects.create_superuser(username=email, email=email, password=senha, is_active=True, is_staff=True)
-            super_user = User.objects.get(email=email)
-            super_user_id = super_user.pk
-            if super_user.is_active:
-                Cliente.objects.create(email=email, usuario=super_user_id)
+
+        super_user = User.objects.get(email=email, is_staff=True, is_superuser=True)
+        super_user_id = super_user.pk
+        if super_user:
+            Cliente.objects.create(email=email, usuario=super_user_id)
