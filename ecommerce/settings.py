@@ -145,19 +145,28 @@ USE_TZ = True
 
 
 #ESTATIC_ROOT = BASE_DIR / 'staticfiles'
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
+#
+# STATIC_URL = 'static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+# ]
+#
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+#
+# MEDIA_URL = 'images/'
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-MEDIA_URL = 'images/'
-
+MEDIA_URL = 'imagens/'
 
 
 
