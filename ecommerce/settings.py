@@ -32,7 +32,7 @@ else:
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'ecommerce-production-af09.up.railway.app' #para teste no mercado pago, retirar antes de jogar no servidor
@@ -145,31 +145,18 @@ USE_TZ = True
 
 
 #ESTATIC_ROOT = BASE_DIR / 'staticfiles'
-# BASE_DIR = Path(__file__).resolve().parent.parent
-#
-# STATIC_URL = 'static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static',
-# ]
-#
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
-#
-# MEDIA_URL = 'images/'
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR / 'static',
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-MEDIA_URL = 'imagens/'
-
-
-
+MEDIA_URL = 'images/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
