@@ -57,11 +57,23 @@ def ordenar_produtos(produtos, ordem):
 #     send_mail(assunto, corpo, remetente, [email])
 
 @shared_task
-def enviar_email_compra_task(pedido_id):
+def enviar_email_compra_task(pedido):
     from .models import Pedido
     try:
-        pedido_id = Pedido.objects.get(id=pedido_id)
-        # ... código do email ...
+        pedido_id = Pedido.objects.get(pedido=pedido)
+        email = pedido.cliente.email
+        lista_pedidos = list(pedido.itens)
+        outra_lista = "\n".join(str(produto) for produto in lista_pedidos)
+        assunto = f'Seu pedido foi aprovado: Id do pedido: {pedido.id}'
+        corpo = f'''Olá, muito obrigado pela confiança em adiquirir nossos produtos, sua compra foi aprovada com sucesso
+        e logo estará a caminho do seu endereço cadastrado, segue abaixo os detalhes do seu pedido:
+        ID:{pedido.id}
+        Produtos: {outra_lista}
+        Quantidade: {pedido.quantidade_total}
+        Preço total: {pedido.preco_total}
+        Qualquer dúvida entre em contato com nosso suporte!'''
+        remetente = "souzadgrafico@gmail.com"
+        send_mail(assunto, corpo, remetente, [email])
         print(f"Email enviado para pedido {pedido_id}")
     except Exception as e:
         print(f"Erro: {e}")
