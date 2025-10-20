@@ -56,28 +56,37 @@ def ordenar_produtos(produtos, ordem):
 #     remetente = "souzadgrafico@gmail.com"
 #     send_mail(assunto, corpo, remetente, [email])
 
-@shared_task
-def enviar_email_compra_task(pedido):
-    from .models import Pedido
-    try:
-        pedido = Pedido.objects.get(pedido=pedido)
-        email = pedido.cliente.email
-        lista_pedidos = list(pedido.itens)
-        outra_lista = "\n".join(str(produto) for produto in lista_pedidos)
-        assunto = f'Seu pedido foi aprovado: Id do pedido: {pedido.id}'
-        corpo = f'''Olá, muito obrigado pela confiança em adiquirir nossos produtos, sua compra foi aprovada com sucesso
-        e logo estará a caminho do seu endereço cadastrado, segue abaixo os detalhes do seu pedido:
-        ID:{pedido.id}
-        Produtos: {outra_lista}
-        Quantidade: {pedido.quantidade_total}
-        Preço total: {pedido.preco_total}
-        Qualquer dúvida entre em contato com nosso suporte!'''
-        remetente = "souzadgrafico@gmail.com"
-        send_mail(assunto, corpo, remetente, [email])
-        print(f"Email enviado para pedido {pedido_id}")
-    except Exception as e:
-        print(f"Erro: {e}")
+def enviar_email_compra_async(pedido):
+    def _enviar_email():
+        try:
+            assunto = f"Confirmação de Pedido #{pedido.id}"
+            corpo = f"""
+            Olá {pedido.usuario.username},
 
+            Seu pedido #{pedido.id} foi confirmado!
+            Total: R$ {pedido.total}
+
+            Obrigado pela compra!
+            """
+            remetente = settings.DEFAULT_FROM_EMAIL
+            email = pedido.usuario.email
+
+            # Timeout de 10 segundos para SMTP
+            send_mail(
+                assunto,
+                corpo,
+                remetente,
+                [email],
+                fail_silently=False
+            )
+            print(f"✅ Email enviado para {email}")
+        except Exception as e:
+            print(f"❌ Erro ao enviar email: {e}")
+
+    # Executa em thread separada
+    thread = threading.Thread(target=_enviar_email)
+    thread.daemon = True
+    thread.start()
 def exportar_csv(informacoes):
     colunas = informacoes.model._meta.fields
     nomes_colunas = [coluna.name for coluna in colunas]

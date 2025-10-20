@@ -3,7 +3,7 @@ from django.urls import reverse
 from .api_mercadopago import criar_pagamento
 from .models import *
 import uuid
-from .utils import filtrar_produtos, preco_minimo_maximo, ordenar_produtos, exportar_csv, enviar_email_compra_task
+from .utils import filtrar_produtos, preco_minimo_maximo, ordenar_produtos, exportar_csv
 from django.contrib.auth import login, logout, authenticate
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -229,7 +229,6 @@ def finalizar_pagamento(request):
         #continua normal do curso aqui para baixo
         pedido.save()
         pagamento.save()
-        enviar_email_compra_task(pedido)
         if request.user.is_authenticated:
             return redirect('meus_pedidos')
         else:
