@@ -84,9 +84,9 @@ def enviar_email_compra_async(pedido):
             print(f"❌ Erro ao enviar email: {e}")
 
     # Executa em thread separada
-    thread = threading.Thread(target=_enviar_email)
-    thread.daemon = True
-    thread.start()
+thread = threading.Thread(target=_enviar_email)
+thread.daemon = True
+thread.start()
 def exportar_csv(informacoes):
     colunas = informacoes.model._meta.fields
     nomes_colunas = [coluna.name for coluna in colunas]
