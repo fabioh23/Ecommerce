@@ -60,7 +60,7 @@ def ordenar_produtos(produtos, ordem):
 def enviar_email_compra_task(pedido):
     from .models import Pedido
     try:
-        pedido_id = Pedido.objects.get(pedido=pedido)
+        pedido = Pedido.objects.get(pedido=pedido)
         email = pedido.cliente.email
         lista_pedidos = list(pedido.itens)
         outra_lista = "\n".join(str(produto) for produto in lista_pedidos)
