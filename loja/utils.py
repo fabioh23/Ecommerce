@@ -68,7 +68,7 @@ def enviar_email_compra_async(pedido):
 
             Obrigado pela compra!
             """
-            remetente = settings.DEFAULT_FROM_EMAIL
+            remetente = settings.EMAIL_HOST_USER
             email = pedido.usuario.email
 
             # Timeout de 10 segundos para SMTP
