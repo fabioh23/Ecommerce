@@ -172,5 +172,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'souzadgrafico@gmail.com' #alterar essa parte quando for o ecommerce do meu pai para o email da loja
-EMAIL_HOST_PASSWORD = 'zlwsofnrbeduhztl'
+EMAIL_HOST_USER = 'censurado' #alterar essa parte quando for o ecommerce do meu pai para o email da loja
+EMAIL_HOST_PASSWORD = 'censurado'

@@ -3,12 +3,13 @@ from django.urls import reverse
 from .api_mercadopago import criar_pagamento
 from .models import *
 import uuid
-from .utils import filtrar_produtos, preco_minimo_maximo, ordenar_produtos, enviar_email_compra, exportar_csv
+from .utils import filtrar_produtos, preco_minimo_maximo, ordenar_produtos, exportar_csv, enviar_email_compra_task
 from django.contrib.auth import login, logout, authenticate
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.utils import timezone
 
 
 # Create your views here.
@@ -216,7 +217,7 @@ def finalizar_pagamento(request):
         pagamento.aprovado = True
         pedido = pagamento.pedido
         pedido.finalizado = True
-        pedido.data_finalizacao = datetime.now()
+        pedido.data_finalizacao = timezone.now()
         #pra descontar da tabela de estoque precisa testar -> funcionando -> criar logica
         #caso quantidade do item_estoque seja == 0 excluir do BD -> não pode excluir nenhum item_estoque se não da problema
         #no sistema por falta de relacionamento no banco de dados.
@@ -228,7 +229,7 @@ def finalizar_pagamento(request):
         #continua normal do curso aqui para baixo
         pedido.save()
         pagamento.save()
-        enviar_email_compra(pedido)
+        enviar_email_compra_task(pedido)
         if request.user.is_authenticated:
             return redirect('meus_pedidos')
         else:

@@ -1,9 +1,13 @@
 from django.core.mail import send_mail
+from django.conf import settings
+from celery import shared_task
+import threading
+import time
 from django.db.models import Max, Min
 from django.http import HttpResponse
 import csv
 from .models import ItensPedido
-
+#rodar pip freeze
 
 def filtrar_produtos(produtos, filtro):
     if filtro:
@@ -37,20 +41,30 @@ def ordenar_produtos(produtos, ordem):
         produtos = [item[1] for item in lista_produtos]
     return produtos
 
-def enviar_email_compra(pedido):
-    email = pedido.cliente.email
-    lista_pedidos = list(pedido.itens)
-    outra_lista = "\n".join(str(produto) for produto in lista_pedidos)
-    assunto = f'Seu pedido foi aprovado: Id do pedido: {pedido.id}'
-    corpo = f'''Olá, muito obrigado pela confiança em adiquirir nossos produtos, sua compra foi aprovada com sucesso
-    e logo estará a caminho do seu endereço cadastrado, segue abaixo os detalhes do seu pedido:
-    ID:{pedido.id}
-    Produtos: {outra_lista}
-    Quantidade: {pedido.quantidade_total}
-    Preço total: {pedido.preco_total}
-    Qualquer dúvida entre em contato com nosso suporte!'''
-    remetente = "souzadgrafico@gmail.com"
-    send_mail(assunto, corpo, remetente, [email])
+# def enviar_email_compra(pedido):
+#     email = pedido.cliente.email
+#     lista_pedidos = list(pedido.itens)
+#     outra_lista = "\n".join(str(produto) for produto in lista_pedidos)
+#     assunto = f'Seu pedido foi aprovado: Id do pedido: {pedido.id}'
+#     corpo = f'''Olá, muito obrigado pela confiança em adiquirir nossos produtos, sua compra foi aprovada com sucesso
+#     e logo estará a caminho do seu endereço cadastrado, segue abaixo os detalhes do seu pedido:
+#     ID:{pedido.id}
+#     Produtos: {outra_lista}
+#     Quantidade: {pedido.quantidade_total}
+#     Preço total: {pedido.preco_total}
+#     Qualquer dúvida entre em contato com nosso suporte!'''
+#     remetente = "souzadgrafico@gmail.com"
+#     send_mail(assunto, corpo, remetente, [email])
+
+@shared_task
+def enviar_email_compra_task(pedido_id):
+    from .models import Pedido
+    try:
+        pedido_id = Pedido.objects.get(id=pedido_id)
+        # ... código do email ...
+        print(f"Email enviado para pedido {pedido_id}")
+    except Exception as e:
+        print(f"Erro: {e}")
 
 def exportar_csv(informacoes):
     colunas = informacoes.model._meta.fields
